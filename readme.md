@@ -1,5 +1,5 @@
-NOTE: THIS IS PART 3/4 FOR MY TUTORIAL THAT CAN BE FOUND ON DEV.TO
-LINK TO DEV.TO ( UNPUBLISHED ) - https://dev.to/mstokluska/technologies-that-changed-my-perception-of-software-development-514o-temp-slug-9091855?preview=b2b0b8ac7f06850f80c48acef4b4ecabbcc4bc9e17ac24aaee54a92d445a726b93f98d34d347f67c5d3790bb21672185625b38f389f912606739cfdf
+NOTE: THIS IS PART 3/4 FOR MY TUTORIAL THAT CAN BE FOUND ON [DEV.TO](https://dev.to/mstokluska/technologies-that-changed-my-perception-of-software-development-514o-temp-slug-9091855?preview=b2b0b8ac7f06850f80c48acef4b4ecabbcc4bc9e17ac24aaee54a92d445a726b93f98d34d347f67c5d3790bb21672185625b38f389f912606739cfdf)
+
 
 ----
 # <center>GraphQL</center>
@@ -37,7 +37,7 @@ I know it might not make too much sense right now, so let's just do it!
 
 Essentially GraphQL is connected into an HTTP endpoint, usually under POST /graphql, so we need to connect to an endpoint handler. There's a lot of work involved in it but luckily for us, a team called Apollo did it already and we can use their implementation! Apollo basically allows for the creation of graphQL server.
 
-- In your existing server project use yarn to add the following dependencies:
+- In your existing server project use npm to add the following dependencies:
 ```
 $ npm install apollo-server-express graphql
 ```
@@ -66,7 +66,7 @@ app.listen(port, () => {
   console.log(`🚀 Server is running at: http://localhost:${port}/graphql`);
 });
 ```
-We no longer need all of the REST methods and we have changed the way our server is build. Firstly, we are adding Apollo Server to our project which is used to be our chosen option to work with our GraphQL. Next, we are applying a schema ( that is yet to be implemented ) to our Apollo Server, and then we are applying middleware to it, which is express and path - or endpoint.
+We no longer need all of the REST methods and we have changed the way our server is built. Firstly, we are adding Apollo Server to our project which is used to be our chosen option to work with our GraphQL. Next, we are applying a schema ( that is yet to be implemented ) to our Apollo Server, and then we are applying middleware to it, which is express and path - or endpoint.
 
 - Create a new folder within our ``server`` folder, called ``schema``
 - Next in ``schema`` folder create a file called ``typeDefs.graphql`` and paste the following code:
@@ -125,7 +125,7 @@ const resolvers = {
 module.exports = resolvers;
 ```
 I like to think of resolvers as workhorses of GraphQL types - types are defining what accessible and resolvers do all the magic with types!
-Our first Query resolver contains two types of queries - tasks and users - as in our typeDefs we have only specified two queries. 
+Our first Query resolver contains two types of queries - tasks and users - as in our `typeDefs` we have only specified two queries. 
 - Lastly, create ``index.js`` in ``schema`` folder and paste following code:
 ```js
 const { importSchema } = require('graphql-import');
@@ -162,7 +162,7 @@ app.listen(port, () => {
 ```
 Pretty cool right?!
 
-- You can now save all your changes, run npm start and navigate to ``http://localhost:4000/graphql``. You should see the following:
+- You can now save all your changes, run `npm start` and navigate to ``http://localhost:4000/graphql``. You should see the following:
 
 ![Playground](https://thepracticaldev.s3.amazonaws.com/i/gaz5w352o1y0k8fxnbw6.png)
 
@@ -176,30 +176,30 @@ Pretty cool right?!
 
 There's a couple of things you must know about queries or mutations typed in the playground.
 - Line#2 ``query AnyNameOfQuery`` - in here you simply specify whether you are about to use query or mutation and the second thing you do is you are naming your query/mutation.
-- Line#3 ``tasks{`` this is the name of our query specified in typeDefs file:
+- Line#3 ``tasks{`` this is the name of our query specified in `typeDefs` file:
 ```
 tasks: [Task!]!
 ```
-- Line#4 & 5 specified what are we interested in. We have specified in our typeDefs that query task is going to return an array of task objects. 
+- Line#4 & 5 specified what are we interested in. We have specified in our `typeDefs` that query task is going to return an array of task objects. 
 
-What it means is that when we execute query task we have access to the full object, but we might only want a certain part of it! So in our example above, we have requested only title and description from an array of tasks and it is what we get! Now, you might think, why can we set a name of our query if we are using the pre-named query from our typeDefs.
-Like in our example, we are using tasks query so why do we need to call it AnyNameOfQuery? We don't have to! But imagine you are working on a client and you want to access tasks twice, once where you are only interested in titles, and other time when you are interested in descriptions only! Naming queries can be very helpful! 
+What it means is that when we execute query task we have access to the full object, but we might only want a certain part of it! So in our example above, we have requested only title and description from an array of tasks and it is what we get! Now, you might think, why can we set a name of our query if we are using the pre-named query from our `typeDefs`.
+Like in our example, we are using tasks query so why do we need to call it `AnyNameOfQuery`? We don't have to! But imagine you are working on a client and you want to access tasks twice, once where you are only interested in titles, and other time when you are interested in descriptions only! Naming queries can be very helpful! 
 
 - Now, let's add ``assignedTo`` to our existing query.
 
 ![Error](https://thepracticaldev.s3.amazonaws.com/i/5d7jcjdy5ddhbvu1kxsi.png)
 
-Straight away GraphQL playground shows us an error on the side. Looking back at our typeDefs we can see that assignedTo returns an array of users.
+Straight away GraphQL playground shows us an error on the side. Looking back at our `typeDefs` we can see that assignedTo returns an array of users.
 ```
 assignedTo: [User!]!
 ```
-Change ``assignedTo`` to ``assignedTo{`` and hit `ctrl + space`. You should see all the available data that GraphQL can fetch for you, it's all the users data we have specified in our typeDefs!
+Change ``assignedTo`` to ``assignedTo{`` and hit `ctrl + space`. You should see all the available data that GraphQL can fetch for you, it's all the users data we have specified in our `typeDefs`!
 
 - Let's select `firstName` and `lastName` for our `assignedTo` field.
 
 ![AssignedTo](https://thepracticaldev.s3.amazonaws.com/i/hflmb09uk44obzjdpcrd.png)
 
-Hit play and...an error! Think of our resolvers and typeDefs now:
+Hit play and...an error! Think of our resolvers and `typeDefs` now:
 ```js
 const { tasks, users } = require('../db');
 
@@ -217,9 +217,9 @@ const resolvers = {
 
 module.exports = resolvers;
 ```
-In our typeDefs we have specified that accessing assignedTo will return an array of users, however, in our resolvers, we have only specified how the server should behave when asked for tasks or users on line 6 & 10 above.
+In our `typeDefs` we have specified that accessing `assignedTo` will return an array of users, however, in our resolvers, we have only specified how the server should behave when asked for tasks or users on line 6 & 10 above.
 Because a query task needs to access an array of users we need to instruct GraphQL how to do this in our resolvers!
-- Let's specify what our assignedTo should do by adding the following code to the resolvers:
+- Let's specify what our `assignedTo` should do by adding the following code to the resolvers:
 ```js
 const resolvers = {
     Task: {
@@ -239,7 +239,7 @@ const resolvers = {
     },
 };
 ```
-We are basically instructing GraphQL that whenever assignedTo is accessed from Task object, use that Task object and filter through an array of users to find a user whos task id matches current task id. Because remember, our User object has also task field which contains the id of the task that links to Task object! And because of this, we need to instruct GraphQL what to do when someone is going to try access task from users query!
+We are basically instructing GraphQL that whenever `assignedTo` is accessed from Task object, use that Task object and filter through an array of users to find a user whos task id matches current task id. Because remember, our User object has also task field which contains the id of the task that links to Task object! And because of this, we need to instruct GraphQL what to do when someone is going to try access task from users query!
 ```js
 const resolvers = {
     Task: {
@@ -282,7 +282,7 @@ type Query {
     userByName(firstName: String!): User!
 }
 ```
-So our new userByName query is going to take in a string and is going to return a User object to us.
+So our new `userByName` query is going to take in a string and is going to return a User object to us.
 
 - Now into resolvers:
 ```js
@@ -302,7 +302,7 @@ Query: {
     },
 ```
 
-I know it might look confusing but all you need to know for now is that args is an object that contains the arguments passed to the field. It's equivalent to REST params if that makes it simpler! We can access what has been specified in typeDefs!
+I know it might look confusing but all you need to know for now is that args is an object that contains the arguments passed to the field. It's equivalent to REST params if that makes it simpler! We can access what has been specified in `typeDefs`!
 
 - Now restart the server and test our new query in a playground:
 
@@ -310,13 +310,13 @@ I know it might look confusing but all you need to know for now is that args is 
 
 Although it's not great as we are looking for a user based on their first name - which in a real-world scenario makes no sense - I think it should give you a clear sense how to create working resolvers! Practice it yourself, maybe add a proper resolver to find a user by his ID?
 
-- Let's add our first mutation type next! It would be great if we could add tasks to our database, to start it we need to edit our typeDefs first:
+- Let's add our first mutation type next! It would be great if we could add tasks to our database, to start it we need to edit our `typeDefs` first:
 ```
 type Mutation {
     addTask(id: ID!, title: String!, description: String!, status: String!, assignedTo: String!): Task!
 }
 ```
-Our addTask mutation takes in an id, title, description, status and assignedTo, all fields are required and we want to return the task created just to make sure that it has been added.
+Our `addTask` mutation takes in an id, title, description, status and assignedTo, all fields are required and we want to return the task created just to make sure that it has been added.
 
 - You probably now what is the next step - resolvers! Let's add our brand new resolver:
 ```js
@@ -370,7 +370,7 @@ const resolvers = {
 
 module.exports = resolvers;
 ```
-What we are doing in about addTask mutation is:
+What we are doing in about `addTask` mutation is:
 - Creating a new task based on passed parameters
 - As our task contains assignedTo we need also need to push new task id to an existing user.
 - Push new task to the task array
